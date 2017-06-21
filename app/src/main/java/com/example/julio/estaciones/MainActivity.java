@@ -153,35 +153,69 @@ public class MainActivity extends AppCompatActivity {
                 SQLiteDatabase db = usuario.getWritableDatabase();
                 ident = edtid_et.getText().toString();
                 if(ident.length()>0){
-                Cursor fila = db.rawQuery(
+                    Cursor fila = db.rawQuery(
 
                         "select * from estaciones where id_et=" + ident, null);
 
-                if (fila.moveToFirst()) {
+                    if (fila.moveToFirst()) {
 
-                    edtmercado.setText(fila.getString(1));
-					edtnombre_et.setText(fila.getString(2));
-					edtid_et.setText(fila.getString(3));
-                    edtdireccion_et.setText(fila.getString(4));
-					edtlat_et.setText(fila.getString(5));
-					edtlong_et.setText(fila.getString(6));
-					edtciudad_et.setText(fila.getString(7));
-					edtestado_et.setText(fila.getString(8));
+                        edtmercado.setText(fila.getString(1));
+                        edtnombre_et.setText(fila.getString(2));
+                        edtid_et.setText(fila.getString(3));
+                        edtdireccion_et.setText(fila.getString(4));
+                        edtlat_et.setText(fila.getString(5));
+                        edtlong_et.setText(fila.getString(6));
+                        edtciudad_et.setText(fila.getString(7));
+                        edtestado_et.setText(fila.getString(8));
 
-                } else{
+                    } else{
 
-                    Toast.makeText(this, "No existe alguna estacion con ese ID",
+                        Toast.makeText(this, "No existe alguna estacion con ese ID",
 
-                            Toast.LENGTH_SHORT).show();
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    db.close();
+
                 }
-                db.close();
-
-            }
                 else{
                     Toast.makeText(this, "Debe ingresar el ID", Toast.LENGTH_SHORT).show();
                 }
 
             return true;
+
+            case R.id.busq_nombre:
+                // Abrimos la BD de registro_et
+                UsuarioSQLiteHelper usuario2 = new UsuarioSQLiteHelper(this, "registro_et", null, 1);
+                SQLiteDatabase db2 = usuario2.getWritableDatabase();
+                nombres = edtnombre_et.getText().toString();
+                if(nombres.length()>0){
+                    Cursor fila = db2.rawQuery(
+
+                            "select * from estaciones where id_et=" + nombres, null);
+
+                    if (fila.moveToFirst()) {
+
+                        edtmercado.setText(fila.getString(1));
+                        edtnombre_et.setText(fila.getString(2));
+                        edtid_et.setText(fila.getString(3));
+                        edtdireccion_et.setText(fila.getString(4));
+                        edtlat_et.setText(fila.getString(5));
+                        edtlong_et.setText(fila.getString(6));
+                        edtciudad_et.setText(fila.getString(7));
+                        edtestado_et.setText(fila.getString(8));
+                    } else{
+
+                        Toast.makeText(this, "No existe alguna estacion con ese NOMBRE",
+
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    db2.close();
+
+                }
+                else{
+                    Toast.makeText(this, "Debe ingresar el NOMBRE", Toast.LENGTH_SHORT).show();
+                }
+                return true;
 
             // Método para modificar la información de la estacion
             case R.id.modif_ident:
@@ -242,6 +276,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "Debe ingresar todos los datos", Toast.LENGTH_SHORT).show();
                 }
                 return true;
+
             default:
                 return onOptionsItemSelected(item);
 

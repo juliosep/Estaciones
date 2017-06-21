@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/lbllat_et"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="@string/lat"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:gravity="start" />
+
+    <EditText
+        android:id="@+id/edtlat_et"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/lbllat_et"
+        android:inputType="text"
+        tools:ignore="LabelFor" />
+
+    <TextView
+        android:id="@+id/lbllong_et"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_below="@+id/lbllat_et"
+        android:text="@string/long_et" />
+
+    <EditText
+        android:id="@+id/edtlong_et"
+        tools:ignore="LabelFor"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/edtlat_et"
+        android:layout_toEndOf="@+id/lbllong_et"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/lblciudad_et"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_below="@+id/lbllong_et"
+        android:text="@string/estado" />
+
+    <EditText
+        android:id="@+id/edtciudad_et"
+        tools:ignore="LabelFor"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/edtlong_et"
+        android:layout_toEndOf="@+id/lblciudad_et"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/lblestado_et"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_below="@+id/lblciudad_et"
+        android:text="@string/ciudad" />
+
+    <EditText
+        android:id="@+id/edtestado_et"
+        tools:ignore="LabelFor"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/edtciudad_et"
+        android:layout_toEndOf="@+id/lblestado_et"
+        android:inputType="text" />
+</RelativeLayout>

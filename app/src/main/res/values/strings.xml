@@ -15,6 +15,7 @@
     <string name="crear_cliente">Crear Estacion</string>
     <string name="busq_ident">Buscar  por ID</string>
     <string name="modif_ident">Modificar Estacion</string>
+    <string name="busq_nombre">Buscar por Nombre</string>
 
     <!-- Conjunto de Strings para el View Mercado -->
     <string-array name="mercados">
