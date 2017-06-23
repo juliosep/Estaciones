@@ -28,11 +28,12 @@
 
         <EditText
             android:id="@+id/edtmercado"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/lblMercado"
             android:inputType="text"
+            android:text="@string/barinas"
             tools:ignore="LabelFor" />
 
 		<TextView
@@ -41,16 +42,17 @@
             android:text="@string/identif"
             android:id="@+id/lblid_et"
             android:gravity="start"
-            android:layout_below="@+id/lblMercado" />
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/edtmercado" />
 
         <EditText
             android:id="@+id/edtid_et"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_below="@+id/edtmercado"
-            android:layout_toEndOf="@+id/lblid_et"
             android:inputType="number"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/lblid_et" />
 
 		<TextView
             android:layout_width="wrap_content"
@@ -69,18 +71,25 @@
             android:inputType="text"
             tools:ignore="LabelFor" />
 
+        <Spinner
+            android:id="@+id/spinombre_et"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/lblnombre_et" />
+
 		<TextView
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:text="@string/apellidos"
             android:id="@+id/lbldireccion_et"
-            android:layout_below="@+id/lblnombre_et" />
+            android:layout_below="@+id/spinombre_et" />
 
         <EditText
             android:id="@+id/edtdireccion_et"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:layout_below="@+id/edtnombre_et"
+            android:layout_below="@+id/spinombre_et"
             android:layout_toEndOf="@+id/lbldireccion_et"
             android:inputType="text"
             tools:ignore="LabelFor" />
@@ -126,7 +135,7 @@
 
         <EditText
             android:id="@+id/edtciudad_et"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_below="@+id/edtlong_et"
             android:layout_toEndOf="@+id/lblciudad_et"
@@ -138,17 +147,19 @@
             android:layout_height="40dp"
             android:text="@string/estado"
             android:id="@+id/lblestado_et"
-            android:layout_below="@+id/lblciudad_et" />
+
+            android:layout_below="@+id/edtlong_et"
+            android:layout_toEndOf="@+id/edtciudad_et" />
 
         <EditText
             android:id="@+id/edtestado_et"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_below="@+id/edtciudad_et"
+            android:layout_below="@+id/edtlong_et"
             android:layout_toEndOf="@+id/lblestado_et"
             android:inputType="text"
             tools:ignore="LabelFor" />
-			
+
 
 
 

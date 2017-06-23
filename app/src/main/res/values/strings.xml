@@ -2,8 +2,9 @@
     <!-- Strings generales -->
     <string name="app_name">Estaciones</string>
     <string name="hello">Hola carajitos</string>
-    <string name="identif">Id Estacion </string>
+    <string name="identif">Id ET </string>
     <string name="mercado">Mercado </string>
+    <string name="barinas">Barinas</string>
     <string name="nombres">Nombre ET </string>
     <string name="apellidos">Direccion </string>
 	<string name="lat">Latitud </string>
@@ -16,6 +17,7 @@
     <string name="busq_ident">Buscar  por ID</string>
     <string name="modif_ident">Modificar Estacion</string>
     <string name="busq_nombre">Buscar por Nombre</string>
+    <string name="busq_nombre2">Cargar Nombres</string>
 
     <!-- Conjunto de Strings para el View Mercado -->
     <string-array name="mercados">

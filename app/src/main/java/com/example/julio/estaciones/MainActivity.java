@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.File;
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     EditText edtmercado;
     EditText edtid_et;
     EditText edtnombre_et;
+    Spinner spinombre_et;
     EditText edtdireccion_et;
 	EditText edtlat_et;
 	EditText edtlong_et;
@@ -40,11 +43,13 @@ public class MainActivity extends AppCompatActivity {
         edtmercado = (EditText) findViewById(R.id.edtmercado);
         edtid_et = (EditText) findViewById(R.id.edtid_et);
         edtnombre_et = (EditText) findViewById(R.id.edtnombre_et);
+        spinombre_et = (Spinner) findViewById(R.id.spinombre_et);
         edtdireccion_et = (EditText) findViewById(R.id.edtdireccion_et);
 		edtlat_et = (EditText) findViewById(R.id.edtlat_et);
 		edtlong_et = (EditText) findViewById(R.id.edtlong_et);
 		edtciudad_et = (EditText) findViewById(R.id.edtciudad_et);
 		edtestado_et = (EditText) findViewById(R.id.edtestado_et);
+
 
     }
 	
@@ -183,15 +188,28 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
 
+            case R.id.busq_nombre2:
+                // Abrimos la BD de registro_et para cargar el Spinner
+                usuario = new UsuarioSQLiteHelper(this, "registro_et", null, 1);
+                db = usuario.getWritableDatabase();
+                Cursor c = db.rawQuery(
+
+                        "select nombre_et from estaciones", null);
+                //Creamos el adaptador
+
+
+
+            return true;
+
             case R.id.busq_nombre:
                 // Abrimos la BD de registro_et
-                UsuarioSQLiteHelper usuario2 = new UsuarioSQLiteHelper(this, "registro_et", null, 1);
-                SQLiteDatabase db2 = usuario2.getWritableDatabase();
+                usuario = new UsuarioSQLiteHelper(this, "registro_et", null, 1);
+                db = usuario.getWritableDatabase();
                 nombres = edtnombre_et.getText().toString();
                 if(nombres.length()>0){
-                    Cursor fila = db2.rawQuery(
+                    Cursor fila = db.rawQuery(
 
-                            "select * from estaciones where id_et=" + nombres, null);
+                            "select * from estaciones where nombre_et like '" + nombres + "'", null);
 
                     if (fila.moveToFirst()) {
 
@@ -209,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 Toast.LENGTH_SHORT).show();
                     }
-                    db2.close();
+                    db.close();
 
                 }
                 else{

@@ -14,4 +14,7 @@
     <item
         android:id="@+id/busq_nombre"
         android:title="@string/busq_nombre" />
+    <item
+        android:id="@+id/busq_nombre2"
+        android:title="@string/busq_nombre2" />
 </menu>
