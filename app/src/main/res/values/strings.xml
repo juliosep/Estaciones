@@ -2,7 +2,7 @@
     <!-- Strings generales -->
     <string name="app_name">Estaciones</string>
     <string name="hello">Hola carajitos</string>
-    <string name="identif">Id ET </string>
+    <string name="identif">Id </string>
     <string name="mercado">Mercado </string>
     <string name="barinas">Barinas</string>
     <string name="nombres">Nombre ET </string>

@@ -128,7 +128,7 @@
 
 		<TextView
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:text="@string/ciudad"
             android:id="@+id/lblciudad_et"
             android:layout_below="@+id/lbllong_et" />
@@ -136,7 +136,7 @@
         <EditText
             android:id="@+id/edtciudad_et"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:layout_below="@+id/edtlong_et"
             android:layout_toEndOf="@+id/lblciudad_et"
             android:inputType="text"
@@ -144,7 +144,7 @@
 
 		<TextView
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:text="@string/estado"
             android:id="@+id/lblestado_et"
 
@@ -154,7 +154,7 @@
         <EditText
             android:id="@+id/edtestado_et"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:layout_below="@+id/edtlong_et"
             android:layout_toEndOf="@+id/lblestado_et"
             android:inputType="text"

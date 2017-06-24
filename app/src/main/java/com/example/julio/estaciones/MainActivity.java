@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
@@ -17,6 +18,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
 	EditText edtlong_et;
 	EditText edtciudad_et;
 	EditText edtestado_et;
+
+    List<String> listaET=new ArrayList<>();
 
 
     @Override
@@ -195,9 +200,13 @@ public class MainActivity extends AppCompatActivity {
                 Cursor c = db.rawQuery(
 
                         "select nombre_et from estaciones", null);
+                //crea la lista de nombres
+                for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+                    listaET.add(c.getString(c.getColumnIndex("nombre_et")));
+                }
                 //Creamos el adaptador
-
-
+                ArrayAdapter<String> adapter2=new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, listaET);
+                spinombre_et.setAdapter(adapter2);
 
             return true;
 
@@ -209,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
                 if(nombres.length()>0){
                     Cursor fila = db.rawQuery(
 
-                            "select * from estaciones where nombre_et like '" + nombres + "'", null);
+                            "select * from estaciones where nombre_et like '" + nombres + "%'", null);
 
                     if (fila.moveToFirst()) {
 
