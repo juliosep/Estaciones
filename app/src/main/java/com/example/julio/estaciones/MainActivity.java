@@ -1,12 +1,15 @@
 package com.example.julio.estaciones;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
@@ -22,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     // Definir las variables para obtener los controles creados
 
@@ -38,6 +41,11 @@ public class MainActivity extends AppCompatActivity {
 
     List<String> listaET=new ArrayList<>();
 
+    /*
+    Estos atributos representan la posición y selección actual del Spinner
+     */
+    protected int position;
+    protected String selection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 		edtciudad_et = (EditText) findViewById(R.id.edtciudad_et);
 		edtestado_et = (EditText) findViewById(R.id.edtestado_et);
 
+        spinombre_et.setOnItemSelectedListener(this);
 
     }
 	
@@ -310,4 +319,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        //Salvar la posición y valor del item actual
+        this.position = position;
+        selection = parent.getItemAtPosition(position).toString();
+
+        //Mostramos la selección actual del Spinner
+        edtnombre_et.setText(selection);
+        Toast.makeText(this,"Selección actual: "+selection,Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        /*
+        Nada por hacer
+         */
+    }
 }
