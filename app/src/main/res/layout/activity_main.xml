@@ -17,24 +17,24 @@
         tools:ignore="MissingConstraints">
 
 
-		<TextView
+        <Spinner
+            android:id="@+id/spimercado"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="@string/mercado"
-            android:id="@+id/lblMercado"
-            android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:gravity="start" />
+            android:entries="@array/mercados" />
+
 
         <EditText
             android:id="@+id/edtmercado"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/lblMercado"
+            android:layout_toEndOf="@+id/spimercado"
             android:inputType="text"
             android:text="@string/barinas"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            android:visibility="invisible"/>
 
 		<TextView
             android:layout_width="wrap_content"

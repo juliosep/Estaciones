@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     EditText edtid_et;
     EditText edtnombre_et;
     Spinner spinombre_et;
+    Spinner spimercado;
     EditText edtdireccion_et;
 	EditText edtlat_et;
 	EditText edtlong_et;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         edtid_et = (EditText) findViewById(R.id.edtid_et);
         edtnombre_et = (EditText) findViewById(R.id.edtnombre_et);
         spinombre_et = (Spinner) findViewById(R.id.spinombre_et);
+        spimercado = (Spinner) findViewById(R.id.spimercado);
         edtdireccion_et = (EditText) findViewById(R.id.edtdireccion_et);
 		edtlat_et = (EditText) findViewById(R.id.edtlat_et);
 		edtlong_et = (EditText) findViewById(R.id.edtlong_et);
@@ -64,7 +66,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 		edtestado_et = (EditText) findViewById(R.id.edtestado_et);
 
         spinombre_et.setOnItemSelectedListener(this);
+        spimercado.setOnItemSelectedListener(this);
 
+        //Carga la BD ya grabada
+        try {
+            deployDatabase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 	
 	private void deployDatabase() throws IOException {
@@ -206,6 +215,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 // Abrimos la BD de registro_et para cargar el Spinner
                 usuario = new UsuarioSQLiteHelper(this, "registro_et", null, 1);
                 db = usuario.getWritableDatabase();
+                listaET.clear();
                 Cursor c = db.rawQuery(
 
                         "select nombre_et from estaciones", null);
@@ -326,10 +336,33 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         this.position = position;
         selection = parent.getItemAtPosition(position).toString();
 
-        //Mostramos la selección actual del Spinner
-        edtnombre_et.setText(selection);
-        Toast.makeText(this,"Selección actual: "+selection,Toast.LENGTH_SHORT).show();
+        //Obteniendo el id del Spinner que recibió el evento
+        int idSpinner = parent.getId();
 
+
+        switch(idSpinner) {
+
+            case R.id.spinombre_et:
+
+                //Se coloca la selección Spinner spinombre_et en edtnombre_et
+                edtnombre_et.setText(selection);
+                //Toast.makeText(this, "Selección actual: " + selection, Toast.LENGTH_SHORT).show();
+                //Se limpian todas las casillas
+                edtid_et.setText("");
+                edtdireccion_et.setText("");
+                edtlat_et.setText("");
+                edtlong_et.setText("");
+                edtciudad_et.setText("");
+                edtestado_et.setText("");
+            break;
+
+            case R.id.spimercado:
+                //Se coloca la selección del Spinner spimercado en edtmercado
+                edtmercado.setText(selection);
+                //Toast.makeText(this, "Selección actual: " + selection, Toast.LENGTH_SHORT).show();
+                armarnombres();
+            break;
+        }
     }
 
     @Override
@@ -337,5 +370,30 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         /*
         Nada por hacer
          */
+    }
+    private void armarnombres(){
+        // Abrimos la BD de registro_et
+        UsuarioSQLiteHelper usuario = new UsuarioSQLiteHelper(this, "registro_et", null, 1);
+        SQLiteDatabase db = usuario.getWritableDatabase();
+        String mercado = edtmercado.getText().toString();
+        listaET.clear();
+        if(mercado.length()>0){
+            Cursor c = db.rawQuery(
+
+                    "select nombre_et from estaciones where mercado like '" + mercado + "%'", null);
+
+            //crea la lista de nombres
+            for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+                listaET.add(c.getString(c.getColumnIndex("nombre_et")));
+            }
+            //Creamos el adaptador
+            ArrayAdapter<String> adapter2=new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, listaET);
+            spinombre_et.setAdapter(adapter2);
+            db.close();
+
+        }
+        else{
+            Toast.makeText(this, "Debe ingresar el NOMBRE", Toast.LENGTH_SHORT).show();
+        }
     }
 }
