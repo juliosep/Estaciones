@@ -18,6 +18,7 @@
     <string name="modif_ident">Modificar Estacion</string>
     <string name="busq_nombre">Buscar por Nombre</string>
     <string name="busq_nombre2">Cargar Nombres</string>
+    <string name="busq_nombre3">Busq Nombres Lista</string>
 
     <!-- Conjunto de Strings para el View Mercado -->
     <string-array name="mercados">

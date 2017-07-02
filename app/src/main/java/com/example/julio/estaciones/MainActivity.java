@@ -215,6 +215,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 // Abrimos la BD de registro_et para cargar el Spinner
                 usuario = new UsuarioSQLiteHelper(this, "registro_et", null, 1);
                 db = usuario.getWritableDatabase();
+                mercado = edtmercado.getText().toString();
+                nombres = edtnombre_et.getText().toString();
                 listaET.clear();
                 Cursor c = db.rawQuery(
 
@@ -323,6 +325,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
                 return true;
 
+            case R.id.busq_nombre3:
+                busqXnombre2();
+                return true;
             default:
                 return onOptionsItemSelected(item);
 
@@ -354,6 +359,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 edtlong_et.setText("");
                 edtciudad_et.setText("");
                 edtestado_et.setText("");
+
+                //busqXnombre2();
+
             break;
 
             case R.id.spimercado:
@@ -389,6 +397,46 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             //Creamos el adaptador
             ArrayAdapter<String> adapter2=new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, listaET);
             spinombre_et.setAdapter(adapter2);
+            db.close();
+
+        }
+        else{
+            Toast.makeText(this, "Debe ingresar el NOMBRE", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void busqXnombre2(){
+        // Abrimos la BD de registro_et
+        UsuarioSQLiteHelper usuario = new UsuarioSQLiteHelper(this, "registro_et", null, 1);
+        SQLiteDatabase db = usuario.getWritableDatabase();
+        String nombre = spinombre_et.getItemAtPosition(position).toString();
+        Toast.makeText(this, "NOMBRE: " + nombre,
+
+                Toast.LENGTH_SHORT).show();
+
+        if(nombre.length()>0){
+            Cursor d = db.rawQuery(
+
+                    "select * from estaciones where nombre_et like '" + nombre + "%'", null);
+
+            //crea la lista de nombres
+            if (d.moveToFirst()) {
+
+                edtmercado.setText(d.getString(1));
+
+                edtnombre_et.setText(d.getString(2));
+                edtid_et.setText(d.getString(3));
+                edtdireccion_et.setText(d.getString(4));
+                edtlat_et.setText(d.getString(5));
+                edtlong_et.setText(d.getString(6));
+                edtciudad_et.setText(d.getString(7));
+                edtestado_et.setText(d.getString(8));
+            } else{
+
+                Toast.makeText(this, "No existe alguna estacion con ese NOMBRE",
+
+                        Toast.LENGTH_SHORT).show();
+            }
             db.close();
 
         }
