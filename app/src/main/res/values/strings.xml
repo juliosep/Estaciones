@@ -5,19 +5,19 @@
     <string name="identif">Id</string>
     <string name="mercado">Mercado </string>
     <string name="barinas">B</string>
-    <string name="nombres">Nombre ET </string>
-    <string name="apellidos">Direccion </string>
-	<string name="lat">Latitud </string>
-	<string name="long_et">Longitud </string>
+    <string name="nombres">Nombre ET:</string>
+    <string name="direccion">Dir:</string>
+	<string name="lat">Lat:</string>
+	<string name="long_et">Long:</string>
 	<string name="ciudad">Ciudad </string>
-	<string name="estado">Estado </string>
+	<string name="estado">Est:</string>
     <string name="titulo_menu">Crear Estacion</string>
     <string name="blanco"> </string>
     <string name="crear_cliente">Crear Estacion</string>
     <string name="busq_ident">Buscar  por ID</string>
     <string name="modif_ident">Modificar Estacion</string>
     <string name="busq_nombre">Buscar por Nombre</string>
-    <string name="busq_nombre2">Cargar Nombres</string>
+    <string name="busq_nombre2">Cargar Nombres Letras Ini</string>
     <string name="busq_nombre3">Busq Nombres Lista</string>
 
     <!-- Conjunto de Strings para el View Mercado -->

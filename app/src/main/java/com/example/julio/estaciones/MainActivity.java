@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 // Trabajar con todos los controlesque definen la estacion para ingresarla
                 String mercado = edtmercado.getText().toString();
                 String ident = edtid_et.getText().toString();
-                String nombres = edtnombre_et.getText().toString();
+                String nombres = edtnombre_et.getText().toString().toUpperCase();
                 String direccion_et = edtdireccion_et.getText().toString();
 				String lat_et = edtlat_et.getText().toString();
 				String long_et = edtlong_et.getText().toString();
@@ -216,26 +216,30 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 usuario = new UsuarioSQLiteHelper(this, "registro_et", null, 1);
                 db = usuario.getWritableDatabase();
                 mercado = edtmercado.getText().toString();
-                nombres = edtnombre_et.getText().toString();
+                nombres = edtnombre_et.getText().toString().toUpperCase();
                 listaET.clear();
-                Cursor c = db.rawQuery(
+                if(nombres.length()>0){
+                    Cursor c = db.rawQuery(
 
-                        "select nombre_et from estaciones", null);
-                //crea la lista de nombres
-                for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
-                    listaET.add(c.getString(c.getColumnIndex("nombre_et")));
+                            "select nombre_et from estaciones where mercado like '" + mercado + "' and " + "nombre_et like '" + nombres + "%'", null);
+                    //crea la lista de nombres
+                    for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+                        listaET.add(c.getString(c.getColumnIndex("nombre_et")));
+                    }
+                    //Creamos el adaptador
+                    ArrayAdapter<String> adapter2=new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, listaET);
+                    spinombre_et.setAdapter(adapter2);
                 }
-                //Creamos el adaptador
-                ArrayAdapter<String> adapter2=new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, listaET);
-                spinombre_et.setAdapter(adapter2);
-
+                else{
+                    Toast.makeText(this, "Debe ingresar el NOMBRE", Toast.LENGTH_SHORT).show();
+                }
             return true;
 
             case R.id.busq_nombre:
                 // Abrimos la BD de registro_et
                 usuario = new UsuarioSQLiteHelper(this, "registro_et", null, 1);
                 db = usuario.getWritableDatabase();
-                nombres = edtnombre_et.getText().toString();
+                nombres = edtnombre_et.getText().toString().toUpperCase();
                 if(nombres.length()>0){
                     Cursor fila = db.rawQuery(
 
@@ -270,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 // Trabajar con todos los controlesque definen la estacion para ingresarla
                 mercado = edtmercado.getText().toString();
                 ident = edtid_et.getText().toString();
-                nombres = edtnombre_et.getText().toString();
+                nombres = edtnombre_et.getText().toString().toUpperCase();
                 direccion_et = edtdireccion_et.getText().toString();
                 lat_et = edtlat_et.getText().toString();
                 long_et = edtlong_et.getText().toString();
@@ -350,10 +354,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             case R.id.spinombre_et:
 
                 //Se coloca la selección Spinner spinombre_et en edtnombre_et
-                edtnombre_et.setText(selection);
+                //edtnombre_et.setText(selection);
                 //Toast.makeText(this, "Selección actual: " + selection, Toast.LENGTH_SHORT).show();
                 //Se limpian todas las casillas
                 edtid_et.setText("");
+                edtnombre_et.setText("");
                 edtdireccion_et.setText("");
                 edtlat_et.setText("");
                 edtlong_et.setText("");
@@ -423,7 +428,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             if (d.moveToFirst()) {
 
                 edtmercado.setText(d.getString(1));
-
                 edtnombre_et.setText(d.getString(2));
                 edtid_et.setText(d.getString(3));
                 edtdireccion_et.setText(d.getString(4));

@@ -81,7 +81,7 @@
 		<TextView
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="@string/apellidos"
+            android:text="@string/direccion"
             android:id="@+id/lbldireccion_et"
             android:layout_below="@+id/spinombre_et" />
 
@@ -103,7 +103,7 @@
 
         <EditText
             android:id="@+id/edtlat_et"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_below="@+id/edtdireccion_et"
             android:layout_toEndOf="@+id/lbllat_et"
@@ -115,30 +115,24 @@
             android:layout_height="50dp"
             android:text="@string/long_et"
             android:id="@+id/lbllong_et"
-            android:layout_below="@+id/lbllat_et" />
+            android:layout_below="@+id/lbldireccion_et"
+            android:layout_toEndOf="@+id/edtlat_et" />
 
         <EditText
             android:id="@+id/edtlong_et"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_below="@+id/edtlat_et"
+            android:layout_below="@+id/lbldireccion_et"
             android:layout_toEndOf="@+id/lbllong_et"
             android:inputType="text"
             tools:ignore="LabelFor" />
 
-		<TextView
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:text="@string/ciudad"
-            android:id="@+id/lblciudad_et"
-            android:layout_below="@+id/lbllong_et" />
 
         <EditText
             android:id="@+id/edtciudad_et"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_below="@+id/edtlong_et"
-            android:layout_toEndOf="@+id/lblciudad_et"
             android:inputType="text"
             tools:ignore="LabelFor" />
 
@@ -147,7 +141,6 @@
             android:layout_height="50dp"
             android:text="@string/estado"
             android:id="@+id/lblestado_et"
-
             android:layout_below="@+id/edtlong_et"
             android:layout_toEndOf="@+id/edtciudad_et" />
 
