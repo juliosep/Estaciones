@@ -12,8 +12,8 @@
     <RelativeLayout
         android:layout_width="297dp"
         android:layout_height="370dp"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="4dp"
+        tools:layout_editor_absoluteX="4dp"
         tools:ignore="MissingConstraints">
 
 
@@ -23,7 +23,6 @@
             android:layout_height="50dp"
             android:layout_alignParentStart="true"
             android:entries="@array/mercados" />
-
 
         <EditText
             android:id="@+id/edtmercado"
@@ -54,44 +53,75 @@
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/lblid_et" />
 
-		<TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="@string/nombres"
-            android:id="@+id/lblnombre_et"
-            android:gravity="start"
-            android:layout_below="@+id/lblid_et" />
-
-        <EditText
-            android:id="@+id/edtnombre_et"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_below="@+id/lblid_et"
-            android:layout_toEndOf="@+id/lblnombre_et"
-            android:inputType="text"
-            tools:ignore="LabelFor" />
-
-        <Spinner
-            android:id="@+id/spinombre_et"
+        <LinearLayout
+            android:id="@+id/laynom"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/lblnombre_et" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/edtid_et">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="@string/nombres"
+                android:id="@+id/lblnombre_et"
+                android:layout_weight="0.75" />
+
+            <EditText
+                android:id="@+id/edtnombre_et"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="text"
+                tools:ignore="LabelFor"
+                android:layout_weight="0.25" />
+
+            <Button
+                android:id="@+id/btbuscaini"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/puntos"
+                android:layout_weight="0.75" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layspi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/laynom">
+
+            <Spinner
+                android:id="@+id/spinombre_et"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:dropDownWidth="match_parent"
+                android:layout_weight="0.15" />
+
+            <Button
+                android:id="@+id/btbuscalista"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/puntos"
+                android:layout_weight="0.85" />
+
+        </LinearLayout>
 
 		<TextView
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:text="@string/direccion"
             android:id="@+id/lbldireccion_et"
-            android:layout_below="@+id/spinombre_et" />
+            android:gravity="start"
+            android:layout_below="@+id/layspi" />
 
         <EditText
             android:id="@+id/edtdireccion_et"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_below="@+id/spinombre_et"
+            android:layout_height="80dp"
+            android:layout_below="@+id/layspi"
             android:layout_toEndOf="@+id/lbldireccion_et"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             tools:ignore="LabelFor" />
 
 		<TextView
@@ -99,7 +129,8 @@
             android:layout_height="50dp"
             android:text="@string/lat"
             android:id="@+id/lbllat_et"
-            android:layout_below="@+id/lbldireccion_et" />
+            android:gravity="start"
+            android:layout_below="@+id/edtdireccion_et" />
 
         <EditText
             android:id="@+id/edtlat_et"
@@ -115,14 +146,14 @@
             android:layout_height="50dp"
             android:text="@string/long_et"
             android:id="@+id/lbllong_et"
-            android:layout_below="@+id/lbldireccion_et"
+            android:layout_below="@+id/edtdireccion_et"
             android:layout_toEndOf="@+id/edtlat_et" />
 
         <EditText
             android:id="@+id/edtlong_et"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_below="@+id/lbldireccion_et"
+            android:layout_below="@+id/edtdireccion_et"
             android:layout_toEndOf="@+id/lbllong_et"
             android:inputType="text"
             tools:ignore="LabelFor" />
@@ -152,7 +183,6 @@
             android:layout_toEndOf="@+id/lblestado_et"
             android:inputType="text"
             tools:ignore="LabelFor" />
-
 
 
 

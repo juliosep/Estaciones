@@ -2,17 +2,18 @@
     <!-- Strings generales -->
     <string name="app_name">Estaciones</string>
     <string name="hello">Hola carajitos</string>
-    <string name="identif">Id</string>
+    <string name="identif">Id:</string>
     <string name="mercado">Mercado </string>
     <string name="barinas">B</string>
-    <string name="nombres">Nombre ET:</string>
+    <string name="nombres">ET:</string>
     <string name="direccion">Dir:</string>
 	<string name="lat">Lat:</string>
-	<string name="long_et">Long:</string>
+	<string name="long_et">Lon:</string>
 	<string name="ciudad">Ciudad </string>
 	<string name="estado">Est:</string>
-    <string name="titulo_menu">Crear Estacion</string>
+    <string name="titulo_menu">Operar Estacion</string>
     <string name="blanco"> </string>
+    <string name="puntos">...</string>
     <string name="crear_cliente">Crear Estacion</string>
     <string name="busq_ident">Buscar  por ID</string>
     <string name="modif_ident">Modificar Estacion</string>

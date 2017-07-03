@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
@@ -25,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     // Definir las variables para obtener los controles creados
 
@@ -35,13 +37,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     Spinner spinombre_et;
     Spinner spimercado;
     EditText edtdireccion_et;
-	EditText edtlat_et;
-	EditText edtlong_et;
-	EditText edtciudad_et;
-	EditText edtestado_et;
+    EditText edtlat_et;
+    EditText edtlong_et;
+    EditText edtciudad_et;
+    EditText edtestado_et;
+    Button btbuscarlista;
+    Button btbuscaini;
 
-    List<String> listaET=new ArrayList<>();
+    List<String> listaET = new ArrayList<>();
 
+    public String mercadoini;
     /*
     Estos atributos representan la posición y selección actual del Spinner
      */
@@ -60,13 +65,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinombre_et = (Spinner) findViewById(R.id.spinombre_et);
         spimercado = (Spinner) findViewById(R.id.spimercado);
         edtdireccion_et = (EditText) findViewById(R.id.edtdireccion_et);
-		edtlat_et = (EditText) findViewById(R.id.edtlat_et);
-		edtlong_et = (EditText) findViewById(R.id.edtlong_et);
-		edtciudad_et = (EditText) findViewById(R.id.edtciudad_et);
-		edtestado_et = (EditText) findViewById(R.id.edtestado_et);
+        edtlat_et = (EditText) findViewById(R.id.edtlat_et);
+        edtlong_et = (EditText) findViewById(R.id.edtlong_et);
+        edtciudad_et = (EditText) findViewById(R.id.edtciudad_et);
+        edtestado_et = (EditText) findViewById(R.id.edtestado_et);
+        btbuscarlista = (Button) findViewById(R.id.btbuscalista);
+        btbuscaini = (Button) findViewById(R.id.btbuscaini);
 
         spinombre_et.setOnItemSelectedListener(this);
         spimercado.setOnItemSelectedListener(this);
+
+        btbuscarlista.setOnClickListener(this);
+        btbuscaini.setOnClickListener(this);
 
         //Carga la BD ya grabada
         try {
@@ -75,41 +85,41 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             e.printStackTrace();
         }
     }
-	
-	private void deployDatabase() throws IOException {
-		//Open your local db as the input stream
-		String packageName = getApplicationContext().getPackageName();
-		String DB_PATH = "/data/data/" + packageName + "/databases/";
-		//Create the directory if it does not exist
-		File directory = new File(DB_PATH);
-		if (!directory.exists()) {
-		directory.mkdirs();
-		}
 
-		String DB_NAME = "registro_et"; //The name of the source sqlite file
+    private void deployDatabase() throws IOException {
+        //Open your local db as the input stream
+        String packageName = getApplicationContext().getPackageName();
+        String DB_PATH = "/data/data/" + packageName + "/databases/";
+        //Create the directory if it does not exist
+        File directory = new File(DB_PATH);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
 
-		InputStream myInput = getAssets().open("registro_et");
+        String DB_NAME = "registro_et"; //The name of the source sqlite file
 
-		// Path to the just created empty db
-		String outFileName = DB_PATH + DB_NAME;
+        InputStream myInput = getAssets().open("registro_et");
 
-		//Open the empty db as the output stream
-		OutputStream myOutput = new FileOutputStream(outFileName);
+        // Path to the just created empty db
+        String outFileName = DB_PATH + DB_NAME;
 
-		//transfer bytes from the inputfile to the outputfile
-		byte[] buffer = new byte[1024];
-		int length;
-		while ((length = myInput.read(buffer)) > 0) {
-		myOutput.write(buffer, 0, length);
-		}
+        //Open the empty db as the output stream
+        OutputStream myOutput = new FileOutputStream(outFileName);
 
-		//Close the streams
-		myOutput.flush();
-		myOutput.close();
-		myInput.close();
+        //transfer bytes from the inputfile to the outputfile
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = myInput.read(buffer)) > 0) {
+            myOutput.write(buffer, 0, length);
+        }
 
-	}
-	
+        //Close the streams
+        myOutput.flush();
+        myOutput.close();
+        myInput.close();
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Se asigna el menu al activity
@@ -127,17 +137,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 return true;
             case R.id.action_add:
                 // Trabajar con todos los controlesque definen la estacion para ingresarla
-                String mercado = edtmercado.getText().toString();
+                //String mercado = edtmercado.getText().toString();
+                String mercado = mercadoini;
                 String ident = edtid_et.getText().toString();
                 String nombres = edtnombre_et.getText().toString().toUpperCase();
                 String direccion_et = edtdireccion_et.getText().toString();
-				String lat_et = edtlat_et.getText().toString();
-				String long_et = edtlong_et.getText().toString();
-				String ciudad_et = edtciudad_et.getText().toString();
-				String estado_et = edtestado_et.getText().toString();
-		
+                String lat_et = edtlat_et.getText().toString();
+                String long_et = edtlong_et.getText().toString();
+                String ciudad_et = edtciudad_et.getText().toString();
+                String estado_et = edtestado_et.getText().toString();
+
                 // Validamos que se ingresen todos los campos
-                if(ident.length()>0 && nombres.length()>0 && direccion_et.length()>0) {
+                if (ident.length() > 0 && nombres.length() > 0 && direccion_et.length() > 0) {
                     // Abrimos la BD de estaciones
                     UsuarioSQLiteHelper usuario = new UsuarioSQLiteHelper(this, "registro_et", null, 1);
                     SQLiteDatabase db = usuario.getWritableDatabase();
@@ -145,13 +156,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     ContentValues registro = new ContentValues();
 
                     registro.put("mercado", mercado);
-					registro.put("id_et", ident);
+                    registro.put("id_et", ident);
                     registro.put("nombre_et", nombres);
                     registro.put("direccion_et", direccion_et);
-					registro.put("lat_et", lat_et);
-					registro.put("long_et", long_et);
-					registro.put("ciudad_et", ciudad_et);
-					registro.put("estado_et", estado_et);
+                    registro.put("lat_et", lat_et);
+                    registro.put("long_et", long_et);
+                    registro.put("ciudad_et", ciudad_et);
+                    registro.put("estado_et", estado_et);
 
                     // los inserto en la base de datos
                     db.insert("estaciones", null, registro);
@@ -164,12 +175,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     edtid_et.setText("");
                     edtnombre_et.setText("");
                     edtdireccion_et.setText("");
-					edtlat_et.setText("");
-					edtlong_et.setText("");
-					edtciudad_et.setText("");
-					edtestado_et.setText("");
-                }
-                else{
+                    edtlat_et.setText("");
+                    edtlong_et.setText("");
+                    edtciudad_et.setText("");
+                    edtestado_et.setText("");
+                } else {
                     Toast.makeText(this, "Debe ingresar todos los datos", Toast.LENGTH_SHORT).show();
                 }
                 return true;
@@ -180,10 +190,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 UsuarioSQLiteHelper usuario = new UsuarioSQLiteHelper(this, "registro_et", null, 1);
                 SQLiteDatabase db = usuario.getWritableDatabase();
                 ident = edtid_et.getText().toString();
-                if(ident.length()>0){
+                if (ident.length() > 0) {
                     Cursor fila = db.rawQuery(
 
-                        "select * from estaciones where id_et=" + ident, null);
+                            "select * from estaciones where id_et=" + ident, null);
 
                     if (fila.moveToFirst()) {
 
@@ -196,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         edtciudad_et.setText(fila.getString(7));
                         edtestado_et.setText(fila.getString(8));
 
-                    } else{
+                    } else {
 
                         Toast.makeText(this, "No existe alguna estacion con ese ID",
 
@@ -204,12 +214,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     }
                     db.close();
 
-                }
-                else{
+                } else {
                     Toast.makeText(this, "Debe ingresar el ID", Toast.LENGTH_SHORT).show();
                 }
 
-            return true;
+                return true;
 
             case R.id.busq_nombre2:
                 // Abrimos la BD de registro_et para cargar el Spinner
@@ -218,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 mercado = edtmercado.getText().toString();
                 nombres = edtnombre_et.getText().toString().toUpperCase();
                 listaET.clear();
-                if(nombres.length()>0){
+                if (nombres.length() > 0) {
                     Cursor c = db.rawQuery(
 
                             "select nombre_et from estaciones where mercado like '" + mercado + "' and " + "nombre_et like '" + nombres + "%'", null);
@@ -227,20 +236,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         listaET.add(c.getString(c.getColumnIndex("nombre_et")));
                     }
                     //Creamos el adaptador
-                    ArrayAdapter<String> adapter2=new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, listaET);
+                    ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, listaET);
                     spinombre_et.setAdapter(adapter2);
-                }
-                else{
+                } else {
                     Toast.makeText(this, "Debe ingresar el NOMBRE", Toast.LENGTH_SHORT).show();
                 }
-            return true;
+                return true;
 
             case R.id.busq_nombre:
                 // Abrimos la BD de registro_et
                 usuario = new UsuarioSQLiteHelper(this, "registro_et", null, 1);
                 db = usuario.getWritableDatabase();
                 nombres = edtnombre_et.getText().toString().toUpperCase();
-                if(nombres.length()>0){
+                if (nombres.length() > 0) {
                     Cursor fila = db.rawQuery(
 
                             "select * from estaciones where nombre_et like '" + nombres + "%'", null);
@@ -255,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         edtlong_et.setText(fila.getString(6));
                         edtciudad_et.setText(fila.getString(7));
                         edtestado_et.setText(fila.getString(8));
-                    } else{
+                    } else {
 
                         Toast.makeText(this, "No existe alguna estacion con ese NOMBRE",
 
@@ -263,8 +271,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     }
                     db.close();
 
-                }
-                else{
+                } else {
                     Toast.makeText(this, "Debe ingresar el NOMBRE", Toast.LENGTH_SHORT).show();
                 }
                 return true;
@@ -272,7 +279,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             // Método para modificar la información de la estacion
             case R.id.modif_ident:
                 // Trabajar con todos los controlesque definen la estacion para ingresarla
-                mercado = edtmercado.getText().toString();
+                //mercado = edtmercado.getText().toString();
+                mercado = mercadoini;
                 ident = edtid_et.getText().toString();
                 nombres = edtnombre_et.getText().toString().toUpperCase();
                 direccion_et = edtdireccion_et.getText().toString();
@@ -280,9 +288,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 long_et = edtlong_et.getText().toString();
                 ciudad_et = edtciudad_et.getText().toString();
                 estado_et = edtestado_et.getText().toString();
-				
+
                 // Validamos que se ingresen todos los campos
-                if(ident.length()>0 && nombres.length()>0 && direccion_et.length()>0) {
+                if (ident.length() > 0 && nombres.length() > 0 && direccion_et.length() > 0) {
                     // Abrimos la BD de estaciones
                     usuario = new UsuarioSQLiteHelper(this, "registro_et", null, 1);
                     db = usuario.getWritableDatabase();
@@ -290,14 +298,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     ContentValues registro = new ContentValues();
 
                     registro.put("mercado", mercado);
-					registro.put("id_et", ident);
+                    registro.put("id_et", ident);
                     registro.put("nombre_et", nombres);
                     registro.put("direccion_et", direccion_et);
-					registro.put("lat_et", lat_et);
-					registro.put("long_et", long_et);
-					registro.put("ciudad_et", ciudad_et);
-					registro.put("estado_et", estado_et);
-					
+                    registro.put("lat_et", lat_et);
+                    registro.put("long_et", long_et);
+                    registro.put("ciudad_et", ciudad_et);
+                    registro.put("estado_et", estado_et);
+
                     int cant = db.update("estaciones", registro, "id_et=" + ident, null);
 
                     db.close();
@@ -305,11 +313,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     edtid_et.setText("");
                     edtnombre_et.setText("");
                     edtdireccion_et.setText("");
-					edtlat_et.setText("");
-					edtlong_et.setText("");
-					edtciudad_et.setText("");
-					edtestado_et.setText("");
-					
+                    edtlat_et.setText("");
+                    edtlong_et.setText("");
+                    edtciudad_et.setText("");
+                    edtestado_et.setText("");
+
                     if (cant == 1)
 
                         Toast.makeText(this, "Datos modificados con éxito", Toast.LENGTH_SHORT)
@@ -322,9 +330,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                                 Toast.LENGTH_SHORT).show();
 
-                }
-
-                else{
+                } else {
                     Toast.makeText(this, "Debe ingresar todos los datos", Toast.LENGTH_SHORT).show();
                 }
                 return true;
@@ -349,7 +355,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         int idSpinner = parent.getId();
 
 
-        switch(idSpinner) {
+        switch (idSpinner) {
 
             case R.id.spinombre_et:
 
@@ -367,14 +373,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                 //busqXnombre2();
 
-            break;
+                break;
 
             case R.id.spimercado:
                 //Se coloca la selección del Spinner spimercado en edtmercado
                 edtmercado.setText(selection);
+                mercadoini = selection;
                 //Toast.makeText(this, "Selección actual: " + selection, Toast.LENGTH_SHORT).show();
                 armarnombres();
-            break;
+                break;
         }
     }
 
@@ -384,13 +391,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Nada por hacer
          */
     }
-    private void armarnombres(){
+
+    private void armarnombres() {
         // Abrimos la BD de registro_et
         UsuarioSQLiteHelper usuario = new UsuarioSQLiteHelper(this, "registro_et", null, 1);
         SQLiteDatabase db = usuario.getWritableDatabase();
-        String mercado = edtmercado.getText().toString();
+        //String mercado = edtmercado.getText().toString();
+        String mercado = spimercado.getItemAtPosition(position).toString();
+
         listaET.clear();
-        if(mercado.length()>0){
+        if (mercado.length() > 0) {
             Cursor c = db.rawQuery(
 
                     "select nombre_et from estaciones where mercado like '" + mercado + "%'", null);
@@ -400,17 +410,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 listaET.add(c.getString(c.getColumnIndex("nombre_et")));
             }
             //Creamos el adaptador
-            ArrayAdapter<String> adapter2=new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, listaET);
+            ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, listaET);
             spinombre_et.setAdapter(adapter2);
             db.close();
 
-        }
-        else{
+        } else {
             Toast.makeText(this, "Debe ingresar el NOMBRE", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void busqXnombre2(){
+    private void busqXnombre2() {
         // Abrimos la BD de registro_et
         UsuarioSQLiteHelper usuario = new UsuarioSQLiteHelper(this, "registro_et", null, 1);
         SQLiteDatabase db = usuario.getWritableDatabase();
@@ -419,7 +428,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                 Toast.LENGTH_SHORT).show();
 
-        if(nombre.length()>0){
+        if (nombre.length() > 0) {
             Cursor d = db.rawQuery(
 
                     "select * from estaciones where nombre_et like '" + nombre + "%'", null);
@@ -435,7 +444,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 edtlong_et.setText(d.getString(6));
                 edtciudad_et.setText(d.getString(7));
                 edtestado_et.setText(d.getString(8));
-            } else{
+            } else {
 
                 Toast.makeText(this, "No existe alguna estacion con ese NOMBRE",
 
@@ -443,9 +452,49 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
             db.close();
 
-        }
-        else{
+        } else {
             Toast.makeText(this, "Debe ingresar el NOMBRE", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void cargaXininombre() {
+        // Abrimos la BD de registro_et para cargar el Spinner
+        UsuarioSQLiteHelper usuario = new UsuarioSQLiteHelper(this, "registro_et", null, 1);
+        SQLiteDatabase db = usuario.getWritableDatabase();
+        String mercado = edtmercado.getText().toString();
+        String nombres = edtnombre_et.getText().toString().toUpperCase();
+        listaET.clear();
+        if (nombres.length() > 0) {
+            Cursor c = db.rawQuery(
+
+                    "select nombre_et from estaciones where mercado like '" + mercado + "' and " + "nombre_et like '" + nombres + "%'", null);
+            //crea la lista de nombres
+            for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+                listaET.add(c.getString(c.getColumnIndex("nombre_et")));
+            }
+            //Creamos el adaptador
+            ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, listaET);
+            spinombre_et.setAdapter(adapter2);
+        } else {
+            Toast.makeText(this, "Debe ingresar el NOMBRE", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        //Obteniendo el id del boton que recibió el evento
+        int idboton = v.getId();
+
+        switch (idboton) {
+            case R.id.btbuscalista:
+                busqXnombre2();
+                break;
+
+            case R.id.btbuscaini:
+                cargaXininombre();
+                break;
+
         }
     }
 }
