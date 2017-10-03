@@ -1,64 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.julio.estaciones.MainActivity">
 
-    <RelativeLayout
-        android:layout_width="297dp"
-        android:layout_height="370dp"
-        tools:layout_editor_absoluteY="4dp"
-        tools:layout_editor_absoluteX="4dp"
-        tools:ignore="MissingConstraints">
-
-
-        <Spinner
-            android:id="@+id/spimercado"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_alignParentStart="true"
-            android:entries="@array/mercados" />
-
-        <EditText
-            android:id="@+id/edtmercado"
-            android:layout_width="30dp"
-            android:layout_height="50dp"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/spimercado"
-            android:inputType="text"
-            android:text="@string/barinas"
-            tools:ignore="LabelFor"
-            android:visibility="invisible"/>
-
-		<TextView
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:text="@string/identif"
-            android:id="@+id/lblid_et"
-            android:gravity="start"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/edtmercado" />
-
-        <EditText
-            android:id="@+id/edtid_et"
+        <LinearLayout
+            android:id="@+id/layid"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:inputType="number"
-            tools:ignore="LabelFor"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/lblid_et" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Spinner
+                android:id="@+id/spimercado"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:entries="@array/mercados"
+                android:layout_weight="0.7" />
+
+            <EditText
+                android:id="@+id/edtmercado"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="text"
+                tools:ignore="LabelFor"
+                android:visibility="invisible"
+                android:layout_weight="1.4" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="@string/identif"
+                android:id="@+id/lblid_et"
+                android:gravity="start"
+                android:layout_weight="1.2" />
+
+            <EditText
+                android:id="@+id/edtid_et"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="number"
+                tools:ignore="LabelFor"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btbuscaid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/puntos"
+                android:layout_weight="1.12" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/laynom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@+id/edtid_et">
+            android:orientation="horizontal" >
 
             <TextView
                 android:layout_width="match_parent"
@@ -88,8 +86,7 @@
             android:id="@+id/layspi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@+id/laynom">
+            android:orientation="horizontal" >
 
             <Spinner
                 android:id="@+id/spinombre_et"
@@ -107,22 +104,35 @@
 
         </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/laydir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
 		<TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="@string/direccion"
             android:id="@+id/lbldireccion_et"
             android:gravity="start"
-            android:layout_below="@+id/layspi" />
+            android:layout_weight="0.93" />
 
         <EditText
             android:id="@+id/edtdireccion_et"
-            android:layout_width="fill_parent"
-            android:layout_height="80dp"
-            android:layout_below="@+id/layspi"
-            android:layout_toEndOf="@+id/lbldireccion_et"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
             android:inputType="textMultiLine"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            android:layout_weight="0.07" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/laylat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
 		<TextView
             android:layout_width="wrap_content"
@@ -130,61 +140,62 @@
             android:text="@string/lat"
             android:id="@+id/lbllat_et"
             android:gravity="start"
-            android:layout_below="@+id/edtdireccion_et" />
+            android:layout_weight="0.05" />
 
         <EditText
             android:id="@+id/edtlat_et"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_below="@+id/edtdireccion_et"
-            android:layout_toEndOf="@+id/lbllat_et"
             android:inputType="text"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            android:layout_weight="0.95" />
 
 		<TextView
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:text="@string/long_et"
             android:id="@+id/lbllong_et"
-            android:layout_below="@+id/edtdireccion_et"
-            android:layout_toEndOf="@+id/edtlat_et" />
+            android:layout_weight="0.05" />
 
         <EditText
             android:id="@+id/edtlong_et"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_below="@+id/edtdireccion_et"
-            android:layout_toEndOf="@+id/lbllong_et"
             android:inputType="text"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            android:layout_weight="0.95" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
         <EditText
             android:id="@+id/edtciudad_et"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_below="@+id/edtlong_et"
             android:inputType="text"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            android:layout_weight="0.8" />
 
 		<TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="@string/estado"
             android:id="@+id/lblestado_et"
-            android:layout_below="@+id/edtlong_et"
-            android:layout_toEndOf="@+id/edtciudad_et" />
+            android:layout_weight="1.35" />
 
         <EditText
             android:id="@+id/edtestado_et"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_below="@+id/edtlong_et"
-            android:layout_toEndOf="@+id/lblestado_et"
             android:inputType="text"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"
+            android:layout_weight="0.8" />
 
+    </LinearLayout>
 
-
-    </RelativeLayout>
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

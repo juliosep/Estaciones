@@ -7,8 +7,8 @@
     <string name="barinas">B</string>
     <string name="nombres">ET:</string>
     <string name="direccion">Dir:</string>
-	<string name="lat">Lat:</string>
-	<string name="long_et">Lon:</string>
+	<string name="lat">La:</string>
+	<string name="long_et">Lg:</string>
 	<string name="ciudad">Ciudad </string>
 	<string name="estado">Est:</string>
     <string name="titulo_menu">Operar Estacion</string>

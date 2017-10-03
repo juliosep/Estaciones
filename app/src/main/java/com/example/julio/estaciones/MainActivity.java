@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     EditText edtestado_et;
     Button btbuscarlista;
     Button btbuscaini;
+    Button btbuscaid;
 
     List<String> listaET = new ArrayList<>();
 
@@ -69,14 +70,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         edtlong_et = (EditText) findViewById(R.id.edtlong_et);
         edtciudad_et = (EditText) findViewById(R.id.edtciudad_et);
         edtestado_et = (EditText) findViewById(R.id.edtestado_et);
+
         btbuscarlista = (Button) findViewById(R.id.btbuscalista);
         btbuscaini = (Button) findViewById(R.id.btbuscaini);
+        btbuscaid = (Button) findViewById(R.id.btbuscaid);
 
         spinombre_et.setOnItemSelectedListener(this);
         spimercado.setOnItemSelectedListener(this);
 
         btbuscarlista.setOnClickListener(this);
         btbuscaini.setOnClickListener(this);
+        btbuscaid.setOnClickListener(this);
 
         //Carga la BD ya grabada
         try {
@@ -495,6 +499,44 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 cargaXininombre();
                 break;
 
+            case R.id.btbuscaid:
+                buscaXid();
+                break;
         }
     }
+
+    private void buscaXid(){
+        // Abrimos la BD de registro_et
+        UsuarioSQLiteHelper usuario = new UsuarioSQLiteHelper(this, "registro_et", null, 1);
+        SQLiteDatabase db = usuario.getWritableDatabase();
+        String ident = edtid_et.getText().toString();
+        if (ident.length() > 0) {
+            Cursor fila = db.rawQuery(
+
+                    "select * from estaciones where id_et=" + ident, null);
+
+            if (fila.moveToFirst()) {
+
+                edtmercado.setText(fila.getString(1));
+                edtnombre_et.setText(fila.getString(2));
+                edtid_et.setText(fila.getString(3));
+                edtdireccion_et.setText(fila.getString(4));
+                edtlat_et.setText(fila.getString(5));
+                edtlong_et.setText(fila.getString(6));
+                edtciudad_et.setText(fila.getString(7));
+                edtestado_et.setText(fila.getString(8));
+
+            } else {
+
+                Toast.makeText(this, "No existe alguna estacion con ese ID",
+
+                        Toast.LENGTH_SHORT).show();
+            }
+            db.close();
+
+        } else {
+            Toast.makeText(this, "Debe ingresar el ID", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
